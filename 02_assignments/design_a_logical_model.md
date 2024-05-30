@@ -5,8 +5,14 @@ Create a logical model for a small bookstore. 📚
 
 At the minimum it should have employee, order, sales, customer, and book entities (tables). Determine sensible column and table design based on what you know about these concepts. Keep it simple, but work out sensible relationships to keep tables reasonably sized. Include a date table. There are several tools online you can use, I'd recommend [_Draw.io_](https://www.drawio.com/) or [_LucidChart_](https://www.lucidchart.com/pages/).
 
+![image](https://github.com/monicarojasp/sql/assets/105380675/ead7ece8-b359-4014-862f-28338d419c46)
+
+
 ## Question 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
+
+![image](https://github.com/monicarojasp/sql/assets/105380675/4204dd26-546c-490c-b7c4-cbbc15b88b3b)
+
 
 ## Question 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2?
@@ -15,7 +21,26 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+Type 1 SCD In this architecture, the customer_address table overwrites changes by updating existing records with new address information.
+
+customer_address table
+customer_id	address	   city	   province	   postal_code
+      1	   address	   city	   province    postal_code
+      2   	address	   city	   province	   postal_code
+      3   	address	   city	   province	   postal_code
+      4   	address   	city	   province	   postal_code
+
+
+Type 2 SCD In this architecture, the customer_address table retain existing records with new address information and keeps a history of the changes
+
+Customer_address table
+customer_key	customer_id	address	   city	   province	   postal_code	   start_date	   end_date
+      1	            1	   address_1	city_1	province_1	postal_code_1	 2012-07-02	   2016-02-11
+      2	            1	   address_2	city_2	province_2	postal_code_2	 2016-02-12	   NULL
+      3	            2	   address_1	city_1	province_1	postal_code_1	 2020-05-03	   2023-08-01
+      4      	      2   	address_2	city_2	province_2	postal_code_2	 2023-08-02	   NULL
+
+
 ```
 
 ## Question 4
@@ -23,7 +48,10 @@ Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
 ```
-Your answer...
+By comparing my Entity-Relationship Diagram (ERD) with the AdventureWorks 2008 schema, I noticed a couple of differences. Firstly, the AdventureWorks schema includes product vendor information, which is not present in my ERD. To enhance the applicability of my ERD, I would incorporate a supplier/vendor table. This addition would allow the bookstore to track where it sources its books from and manage incoming shipments effectively.
+
+Additionally, the AdventureWorks schema features a Product Review table, which I find intriguing and beneficial for my ERD. By including a ProductReview table, my ERD can capture valuable customer feedback on specific books. This information can aid in decision-making processes regarding book selection and inventory management.
+
 ```
 
 # Criteria
